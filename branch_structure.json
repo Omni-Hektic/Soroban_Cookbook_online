@@ -1,0 +1,18 @@
+{
+  "default_branch": "main",
+  "branches": [
+    "fix/issue-1350-encode-patterncard-ids-in-links",
+    "main",
+    "origin"
+  ],
+  "parent": {
+    "fix/issue-1350-encode-patterncard-ids-in-links": "main",
+    "main": null,
+    "origin": "main"
+  },
+  "order": [
+    "main",
+    "fix/issue-1350-encode-patterncard-ids-in-links",
+    "origin"
+  ]
+}
