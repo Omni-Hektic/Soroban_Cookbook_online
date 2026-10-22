@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import styles from './styles.module.css';
 
 export type SnippetTab = {
@@ -37,6 +37,8 @@ export default function TabbedCodeSnippet({
   const [activeTab, setActiveTab] = useState(0);
   const [expanded, setExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
+  const copyTimer = useRef<number | undefined>(undefined);
+  const copyGeneration = useRef(0);
 
   const clampedTabIndex =
     hasTabs && tabs ? Math.max(0, Math.min(activeTab, tabs.length - 1)) : 0;
@@ -58,10 +60,7 @@ export default function TabbedCodeSnippet({
       ? tabs[clampedTabIndex]
       : { code, language, fileName, highlightLines };
 
-  const rawLines = useMemo(
-    () => (resolved?.code ?? '').replace(/\n$/, '').split('\n'),
-    [resolved?.code],
-  );
+const rawLines = useMemo(() => resolved.code.replace(/\n$/, '').split('\n'), [resolved.code]);
   const shouldCollapse = rawLines.length > collapseAt;
   const visibleLines = shouldCollapse && !expanded ? rawLines.slice(0, collapseAt) : rawLines;
   const highlighted = normalizeHighlight(resolved?.highlightLines);
@@ -87,9 +86,15 @@ export default function TabbedCodeSnippet({
   }
 
   const handleCopy = async () => {
+    const generation = copyGeneration.current;
     await navigator.clipboard.writeText(resolved.code);
+    if (generation !== copyGeneration.current) return;
+    window.clearTimeout(copyTimer.current);
     setCopied(true);
-    window.setTimeout(() => setCopied(false), 1200);
+    copyTimer.current = window.setTimeout(() => {
+      copyTimer.current = undefined;
+      setCopied(false);
+    }, 1200);
   };
 
   return (
