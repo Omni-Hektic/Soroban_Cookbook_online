@@ -28,7 +28,7 @@ export function slugify(label: string): string {
 }
 
 export function computeProgressPercent(activeIndex: number, total: number): number {
-  if (total <= 0) {
+  if (!total || total <= 0) {
     return 0;
   }
   const clamped = Math.min(Math.max(activeIndex, 0), total - 1);
@@ -108,7 +108,7 @@ export function TutorialProgress({ steps, className }: TutorialProgressProps) {
   const percent = computeProgressPercent(activeIndex, steps.length);
 
   const goToStep = (index: number) => {
-    const id = ids[index];
+    const id = idks[index];
     const el = id ? document.getElementById(id) : null;
     if (el) {
       setActiveIndex(index);
