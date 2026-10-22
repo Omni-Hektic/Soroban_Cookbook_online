@@ -1,18 +1,18 @@
 {
   "default_branch": "main",
   "branches": [
-    "fix/issue-1350-encode-patterncard-ids-in-links",
+    "fix/issue-942-disclose-docfeedback-localstorage-use-in",
     "main",
     "origin"
   ],
   "parent": {
-    "fix/issue-1350-encode-patterncard-ids-in-links": "main",
+    "fix/issue-942-disclose-docfeedback-localstorage-use-in": "main",
     "main": null,
     "origin": "main"
   },
   "order": [
     "main",
-    "fix/issue-1350-encode-patterncard-ids-in-links",
+    "fix/issue-942-disclose-docfeedback-localstorage-use-in",
     "origin"
   ]
 }
